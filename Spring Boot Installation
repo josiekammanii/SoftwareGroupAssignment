@@ -1,0 +1,47 @@
+==========================
+Step 1: Install SDKMAN (For macOS/Linux)
+==========================
+SDKMAN is the easiest way to install Spring Boot CLI on macOS/Linux.
+Open a terminal and run:
+
+curl -s "https://get.sdkman.io" | bash
+
+After installation, restart your terminal or run:
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+Install Spring Boot CLI:
+sdk install springboot
+
+Verify installation:
+spring --version
+
+Expected output:
+Spring Boot X.X.X (where X.X.X is the version number)
+
+==========================
+Step 2: Install Spring Boot CLI Manually (For Windows)
+==========================
+1. Go to the official Spring Boot CLI download page:
+   https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html#getting-started-installing-cli
+2. Download the latest Spring Boot CLI **zip file**.
+3. Extract the zip file to a folder, e.g., C:\SpringBootCLI.
+4. Set up environment variables:
+   - Open "System Properties" → "Advanced" → "Environment Variables".
+   - Under "System Variables", find "Path" and **add**:
+     C:\SpringBootCLI\bin
+5. Open a new Command Prompt and verify installation:
+spring --version
+
+Expected output:
+Spring Boot X.X.X (where X.X.X is the version number)
+
+==========================
+Step 3: Run a Spring Boot Application Using CLI (Optional)
+==========================
+To quickly create and run a Spring Boot application using CLI, run:
+
+spring init --dependencies=web myapp
+cd myapp
+mvn spring-boot:run
+
+This will create a simple Spring Boot web app and run it.
