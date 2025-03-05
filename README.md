@@ -30,7 +30,7 @@ Quick Payments: Complete payments in one or two clicks from notifications.
 
 Ensure you have the following installed:
 
-Node.js and npm (for frontend dependencies)
+Node.js , npm & React (for frontend dependencies)
 
 Java JDK 17+ (for backend development)
 
