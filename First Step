@@ -2,57 +2,107 @@ Let's get started with this project.
 
 These are some things you need to install to kick start your journey.
 
-* Step 1: Install Node.js and npm * 
+==========================
+** Step 1: Install Node.js and npm **
+==========================
 
-# Download the LTS version of Node.js from the official website:
-# Go to https://nodejs.org/
-# Download the installer for your operating system (Windows/macOS/Linux).
-# Run the installer and follow the instructions.
+Download the LTS version of Node.js from the official website:
+Go to https://nodejs.org/
+Download the installer for your operating system (Windows/macOS/Linux).
+Run the installer and follow the instructions.
 
-# After installation, verify that Node.js and npm are installed correctly:
+After installation, verify that Node.js and npm are installed correctly:
 node -v # Check Node.js version
 npm -v  # Check npm version (Node Package Manager)
 
-# If the versions are displayed, Node.js and npm are installed successfully.
+If the versions are displayed, Node.js and npm are installed successfully.
 
-# Step 2: Create a New React Application
+Step 2: Create a New React Application
 
-# Use the following command to create a new React application:
-# The `npx` command is used to create a new React app without installing anything globally.
+Use the following command to create a new React application:
+The `npx` command is used to create a new React app without installing anything globally.
 npx create-react-app my-app
 
-# Note: Replace 'my-app' with your preferred project name.
+Note: Replace 'my-app' with your preferred project name.
 
-# Step 3: Navigate to Your Project Folder
+Step 3: Navigate to Your Project Folder
 
-# Once the project is created, navigate to the project directory using the `cd` command.
+Once the project is created, navigate to the project directory using the `cd` command.
 cd my-app
 
-# Step 4: Start the React Development Server
+Step 4: Start the React Development Server
 
-# Start the development server to run the React app locally.
+Start the development server to run the React app locally.
 npm start
 
-# This command will automatically open your app in the browser at http://localhost:3000.
-# Your React application is now running!
+This command will automatically open your app in the browser at http://localhost:3000.
+Your React application is now running!
 
-# Step 5: Install Additional Packages (Optional)
+Step 5: Install Additional Packages (Optional)
 
-# To install additional packages or libraries for your React app, use npm.
-# For example, to install React Router for navigation:
+To install additional packages or libraries for your React app, use npm.
+For example, to install React Router for navigation:
 npm install react-router-dom
 
-# Or to install Axios for making HTTP requests:
+Or to install Axios for making HTTP requests:
 npm install axios
 
-# Step 6: Build the Application for Production (When Ready)
+Step 6: Build the Application for Production (When Ready)
 
-# When you're ready to deploy your app, you can create a production build using:
+When you're ready to deploy your app, you can create a production build using:
 npm run build
 
-# This will optimize your app and create a 'build' folder ready for deployment.
+This will optimize your app and create a 'build' folder ready for deployment.
 
-# Step 7: Run Tests (Optional)
+Step 7: Run Tests (Optional)
 
-# If you want to run tests for your React app:
+If you want to run tests for your React app:
 npm test
+
+==========================
+** Step 2: Download Maven **
+==========================
+
+ Go to the official Maven download page:
+ https://maven.apache.org/download.cgi
+
+ Download the latest "Binary zip archive" for Windows
+ OR "tar.gz" file for macOS/Linux.
+
+ Step 1: Extract Maven Files 
+
+ Windows:
+- Extract the downloaded .zip file to a folder (e.g., C:\Program Files\Apache\Maven)
+
+macOS/Linux:
+- Open Terminal and navigate to the folder where you downloaded Maven.
+ - Run the following command to extract:
+tar -xvzf apache-maven-*.tar.gz -C /opt/
+
+Step 2: Set Environment Variables
+Windows:
+- Open "System Properties" → "Advanced" → "Environment Variables".
+- Under "System Variables", find "Path" and add:
+ C:\Program Files\Apache\Maven\bin
+
+ macOS/Linux:
+- Open Terminal and edit your shell profile file (.bashrc, .zshrc, or .bash_profile):
+nano ~/.bashrc  # or ~/.zshrc for macOS
+- Add the following lines at the end of the file:
+export M2_HOME=/opt/apache-maven-<version>
+export PATH=$M2_HOME/bin:$PATH
+- Save the file (Ctrl + X, then Y, then Enter).
+- Apply changes:
+source ~/.bashrc  # or source ~/.zshrc for macOS
+
+Step 4: Verify Installation
+Open a new terminal or command prompt and run:
+mvn -version
+
+# Expected output:
+# Apache Maven X.X.X (version number)
+# Maven home: /path/to/maven
+# Java version: X.X.X, vendor: Oracle Corporation
+# 
+# If you see the above details, Maven is installed successfully!
+
