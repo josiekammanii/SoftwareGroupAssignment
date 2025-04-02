@@ -1,3 +1,4 @@
+spring.data.mongodb.uri=mongodb://localhost:27017/appdbs
 public class Pupil {
 
     public String name;
