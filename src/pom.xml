@@ -56,7 +56,6 @@
     </plugins>
   </build>
 
-</project>
 <dependencies>
 <!-- Spring Boot Starter Data MongoDB -->
 <dependency>
@@ -64,5 +63,6 @@
   <artifactId>spring-boot-starter-data-mongodb</artifactId>
 </dependency>
 </dependencies>
+</project>
 
 
