@@ -25,7 +25,6 @@ public class pupil {
                 System.out.println("No matching documents found.");
             }
         }
-    }
 }
 public class Pupil {
 
