@@ -1,8 +1,10 @@
 [
   {
-    "eventId": "",
-    "eventName": "",
-    "eventTime": "",
+    "eventId": "1",
+    "eventName": "Bowling Trip",
+    "eventDate": "21/05/2025",
+    "eventPlace": "Hollywood Bowl",
+    "eventTime": "13:00",
     "cohortId": null
   }
 ]
