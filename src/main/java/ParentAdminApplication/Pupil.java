@@ -6,7 +6,10 @@ public class Pupil {
     private String id;
     private String name;
     private LocalDate dob;
-    private Integer cohortId;
+    private String cohortId;
+
+    public String getId() { return id; }
+    public void setID(String id) { this.id = id; }
 
     public String getName(){
         return name;
