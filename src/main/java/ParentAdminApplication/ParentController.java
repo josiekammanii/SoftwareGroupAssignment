@@ -18,7 +18,7 @@ public class ParentController {
         String name = loginRequest.getName();
         LocalDate dob = loginRequest.getDOB();
 
-        Pupil pupil = jsonService.findPupilbyNameAndDob(name, dob.atStartOfDay());
+        Pupil pupil = pupilJsonService.findPupilbyNameAndDob(name, dob);
 
         if (pupil == null) {
             return ResponseEntity.status(401).body("This pupil does not exist");
