@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class JsonService {
+public class PupilJsonService {
+
+    private final ObjectMapper ObjectMapper;
 
     public Pupil findPupilbyNameAndDob(String pupilName, LocalDateTime dob) {
         try {
