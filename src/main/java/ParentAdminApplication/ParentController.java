@@ -5,10 +5,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:63342")
 @RestController
 @RequestMapping
 public class ParentController {
+
+    @GetMapping("/")
+    public String hello() {
+        return "Backend is working!";
+    }
 
     @Autowired
     private JsonService jsonService;
@@ -27,5 +34,12 @@ public class ParentController {
         }
 
     }
+    @GetMapping("/api/events/{cohortId}")
+    public ResponseEntity<?> getEventsByCohort(@PathVariable Integer cohortId) {
+        List<Event> events = jsonService.getEventsByCohortId(cohortId);
+        return ResponseEntity.ok(events);
+    }
+
+
 
 }
