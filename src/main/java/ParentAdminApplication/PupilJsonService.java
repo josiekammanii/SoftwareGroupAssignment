@@ -35,8 +35,9 @@ public class PupilJsonService {
     public Pupil findPupilbyNameAndDob(String pupilName, LocalDate dob) {
         try {
             File file = new File("pupils.json");
-            ObjectMapper mapper = new ObjectMapper();
-            List<Pupil> pupils = mapper.readValue(file, new TypeReference<List<Pupil>>() {});
+            if (!file.exists()) return null;
+
+            List<Pupil> pupils = objectMapper.readValue(file, new TypeReference<List<Pupil>>() {});
 
             for (Pupil pupil : pupils){
                 if (Objects.equals(pupil.getName(), pupilName) && pupil.getDob().equals(dob)){
