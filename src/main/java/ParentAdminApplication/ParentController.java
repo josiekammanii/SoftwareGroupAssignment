@@ -10,8 +10,8 @@ import java.time.LocalDate;
 @RequestMapping
 public class ParentController {
 
-    @Autowired
-    private JsonService jsonService;
+@Autowired
+    private PupilJsonService pupilJsonService;
 
     @PostMapping ("/Login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
