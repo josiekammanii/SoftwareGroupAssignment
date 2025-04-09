@@ -18,7 +18,19 @@ public class PupilJsonService {
 
     private final ObjectMapper ObjectMapper;
 
-    public Pupil findPupilbyNameAndDob(String pupilName, LocalDateTime dob) {
+    public PupilJsonService() {
+    this.ObjectMapper = new ObjectMapper();
+    this.ObjectMapper.registerModule(new JavaTimeModule());
+    this.ObjectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    }
+
+    public List<Pupil> readPupils() throws IOException {
+        File file = new File("pupils.json");
+        if (!file.exists()) return new ArrayList<>();
+        return ObjectMapper.readValue(file, new TypeReference<List<Pupil>>() {});
+        }
+
+    public Pupil findPupilbyNameAndDob(String pupilName, LocalDate dob) {
         try {
             File file = new File("pupils.json");
             ObjectMapper mapper = new ObjectMapper();
