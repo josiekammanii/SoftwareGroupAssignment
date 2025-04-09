@@ -8,7 +8,7 @@ This project is a School Calendar Application that allows school administrators 
 
 **For School Administrators**:
 
-Event Management: Create, update, delete, and add events to individual student calendars.
+ParentAdminApplication.Event Management: Create, update, delete, and add events to individual student calendars.
 
 Payment Integration: Attach payment links to calendar invites for school trips.
 
