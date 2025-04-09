@@ -19,7 +19,7 @@ public class PupilJsonService {
     private final ObjectMapper ObjectMapper;
     private final ObjectMapper objectMapper;
 
-    public PupilJsonService() {
+    public PupilJsonService(ObjectMapper objectMapper) {
     this.ObjectMapper = new ObjectMapper();
     this.ObjectMapper.registerModule(new JavaTimeModule());
     this.ObjectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
