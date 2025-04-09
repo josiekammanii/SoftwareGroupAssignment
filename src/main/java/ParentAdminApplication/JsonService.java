@@ -3,7 +3,6 @@ package ParentAdminApplication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-import ParentAdminApplication.Event;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -19,7 +18,8 @@ public class JsonService {
         try {
             File file = new File("pupils.json");
             ObjectMapper mapper = new ObjectMapper();
-            List<Pupil> pupils = mapper.readValue(file, new TypeReference<List<Pupil>>() {});
+            List<Pupil> pupils = mapper.readValue(file, new TypeReference<>() {
+            });
 
             for (Pupil pupil : pupils){
                 if (Objects.equals(pupil.getName(), pupilName) && pupil.getDob().equals(dob)){
@@ -36,7 +36,8 @@ public class JsonService {
         ObjectMapper mapper = new ObjectMapper();
         try {
             File file = new File("src/main/events.json");
-            return mapper.readValue(file, new TypeReference<List<Event>>() {});
+            return mapper.readValue(file, new TypeReference<>() {
+            });
         } catch (Exception e) {
             e.printStackTrace();
             return List.of();
