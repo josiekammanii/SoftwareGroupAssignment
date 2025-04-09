@@ -23,6 +23,7 @@ public class PupilJsonService {
     this.ObjectMapper = new ObjectMapper();
     this.ObjectMapper.registerModule(new JavaTimeModule());
     this.ObjectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        this.objectMapper = objectMapper;
     }
 
     public List<Pupil> readPupils() throws IOException {
