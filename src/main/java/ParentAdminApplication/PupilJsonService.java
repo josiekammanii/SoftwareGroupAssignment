@@ -17,6 +17,7 @@ import java.util.Objects;
 public class PupilJsonService {
 
     private final ObjectMapper ObjectMapper;
+    private final ObjectMapper objectMapper;
 
     public PupilJsonService() {
     this.ObjectMapper = new ObjectMapper();
