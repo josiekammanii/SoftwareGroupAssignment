@@ -1,22 +1,30 @@
 package ParentAdminApplication;
 import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Pupil {
 
     private String id;
     private String name;
     private LocalDate dob;
-    private String cohortId;
+    private Integer cohortId;
 
-    public String getId() { return id; }
-    public void setID(String id) { this.id = id; }
+    public Pupil(String name, LocalDate dob, Integer cohortId) {
+        this.name = name;
+        this.dob = dob;
+        this.cohortId = cohortId;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public Pupil(){
 
-    public LocalDate getDob() { return dob; }
-    public void setDob(LocalDate dob) { this.dob = dob; }
+    }
+    public String getName(){
+        return name;
+    }
 
-    public String getCohortId() { return cohortId; }
-    public void setCohortId(String cohortId) {this.cohortId = cohortId; }
+    public LocalDate getDob(){
+        return dob;
+    }
 }

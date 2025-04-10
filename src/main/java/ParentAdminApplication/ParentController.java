@@ -9,7 +9,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:63342")
 @RestController
-@RequestMapping
+@RequestMapping("/api")
 public class ParentController {
 
     @GetMapping("/")
@@ -20,10 +20,13 @@ public class ParentController {
     @Autowired
     private JsonService jsonService;
 
-    @PostMapping ("/Login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         String name = loginRequest.getName();
         LocalDate dob = loginRequest.getDOB();
+
+        System.out.println("Received name: " + name);
+        System.out.println("Received dob: " + dob);
 
         Pupil pupil = jsonService.findPupilbyNameAndDob(name, dob.atStartOfDay());
 
@@ -32,14 +35,12 @@ public class ParentController {
         } else {
             return ResponseEntity.ok(pupil);
         }
-
     }
-    @GetMapping("/api/events/{cohortId}")
+
+    @GetMapping("/events/{cohortId}")
     public ResponseEntity<?> getEventsByCohort(@PathVariable Integer cohortId) {
         List<Event> events = jsonService.getEventsByCohortId(cohortId);
         return ResponseEntity.ok(events);
     }
-
-
 
 }
