@@ -1,53 +1,47 @@
 package ParentAdminApplication;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
+import java.io.InputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Component
-public class JsonService {
+public abstract class JsonService {
 
-    public Pupil findPupilbyNameAndDob(String pupilName, LocalDateTime dob) {
+    public Pupil findPupilbyNameAndDob(String pupilName, LocalDateTime dobTime) {
         try {
-            File file = new File("pupils.json");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("json/pupils.json");
             ObjectMapper mapper = new ObjectMapper();
-            List<Pupil> pupils = mapper.readValue(file, new TypeReference<>() {
-            });
+            mapper.registerModule(new JavaTimeModule());
 
-            for (Pupil pupil : pupils){
-                if (Objects.equals(pupil.getName(), pupilName) && pupil.getDob().equals(dob)){
+            List<Pupil> pupils = mapper.readValue(inputStream, new TypeReference<List<Pupil>>() {});
+            LocalDate dob = dobTime.toLocalDate();
+
+            for (Pupil pupil : pupils) {
+                if (pupil.getName().trim().equalsIgnoreCase(pupilName.trim()) && pupil.getDob().equals(dob)) {
                     return pupil;
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Could not load or read pupils.json", e);
         }
+
         return null;
     }
 
-    public List<Event> loadEvents() {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            File file = new File("src/main/events.json");
-            return mapper.readValue(file, new TypeReference<>() {
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            return List.of();
-        }
-    }
+    protected abstract List<Pupil> loadPupils();
+
+    public abstract List<Event> loadEvents();
+
     public List<Event> getEventsByCohortId(Integer cohortId) {
         List<Event> allEvents = loadEvents();
         return allEvents.stream()
                 .filter(event -> event.getCohortId().equals(cohortId))
                 .collect(Collectors.toList());
     }
-
 }
