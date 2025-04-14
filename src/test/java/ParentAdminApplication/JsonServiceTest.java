@@ -12,7 +12,7 @@ class JsonServiceTest {
 
     JsonService jsonService = new JsonService() {
         @Override
-        protected List<Pupil> loadPupils() {
+        public List<Pupil> loadPupils() {
             return Arrays.asList(
                     new Pupil("James Radcliffe", LocalDate.of(2005, 4, 23), 1),
                     new Pupil("Olu Smith", LocalDate.of(2005, 7, 21), 2)
