@@ -12,8 +12,13 @@
     </head>
     <body>
         <h1>Would you like to...</h1>
-    <div class="d-grid gap-2 col-6 mx-auto" >    
-        <a class="btn btn-primary" role="button" >Create an event </a>
+    <div class="d-grid gap-2 col-6 mx-auto" >
+        <a href="design_event.html" class="btn btn-primary">Create an event</a>
+        <script>
+            document.getElementById("create-event").addEventListener("click", function () {
+                window.location.href = "event_creator.html";
+            });
+        </script>
         <a class="btn btn-primary" role="button" >Delete an event</a>
         <a href="/RSVP_status" class="btn btn-primary" role="button" >Check RSVP status</a>
     </div>
