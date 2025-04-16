@@ -12,11 +12,6 @@ import java.util.List;
 @RequestMapping("/api")
 public class ParentController {
 
-    @GetMapping("/")
-    public String hello() {
-        return "Backend is working!";
-    }
-
     @Autowired
     private JsonService jsonService;
 

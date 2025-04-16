@@ -1,7 +1,7 @@
 package ParentAdminApplication;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,6 +78,10 @@ public class JsonService {
             List<Event> events = file.exists()
                     ? mapper.readValue(file, new TypeReference<List<Event>>() {})
                     : new ArrayList<>();
+
+            if (event.getEventId() == null || event.getEventId().isEmpty()) {
+                event.setEventId(UUID.randomUUID().toString());
+            }
 
             events.add(event);
             mapper.writeValue(file, events);
