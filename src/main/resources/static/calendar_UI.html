@@ -68,6 +68,10 @@
             background: transparent;
             border-bottom: none;
         }
+
+        .bg-info {
+            background-color: #9ab7fb !important;
+        }
     </style>
 </head>
 <body>
@@ -82,9 +86,10 @@
 
 <div class="container mt-3">
     <div class="card p-3">
-        <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="card-header d-flex justify-content-between mb-3 align-items-center">
             <button id="prevMonth" class="btn btn-outline-primary">&larr; Prev</button>
-            <h2 id="monthYear" class="mb-0"></h2>
+            <h2 id="monthYear" class="mb-0 text-center flex-grow-1"></h2>
+            <button id="RSVP" class="btn btn-outline-dark">RSVP Event </button>
             <button id="nextMonth" class="btn btn-outline-primary">Next &rarr;</button>
         </div>
         <div class="card-body">
@@ -95,6 +100,7 @@
                 </tr>
                 </thead>
                 <tbody id="calendarBody"></tbody>
+                <td 
             </table>
         </div>
     </div>
@@ -137,6 +143,11 @@
         const calendarBody = document.getElementById("calendarBody");
         calendarBody.innerHTML = "";
 
+        const today = new Date();
+        const todayDate = today.getDate();
+        const todayMonth = today.getMonth();
+        const todayYear = today.getFullYear();
+
         let dateCounter = 1;
 
         for (let i = 0; i < 6; i++) {
@@ -160,6 +171,10 @@
                         cell.classList.add("bg-warning");
                     } else {
                         cell.textContent = dateCounter;
+                    }
+
+                    if (dateCounter === todayDate && month === todayMonth && year === todayYear) {
+                        cell.classList.add("bg-info", "text-white", "fw-bold");
                     }
 
                     dateCounter++;
