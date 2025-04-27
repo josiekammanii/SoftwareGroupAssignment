@@ -1,0 +1,44 @@
+name: Build and Deploy Project
+
+# When to trigger? when someone pushes code to the main branch
+on:
+  push:
+    branches:
+      - main  # or 'master' depending on your branch name
+
+# What to do
+jobs:
+  build: #name of the job
+
+    runs-on: ubuntu-latest  # Virtual machine environment
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3 #pulls up a clone
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build the app
+        run: npm run build
+
+      - name: Deploy to AWS server
+        run: |
+          echo "Deploying Node.js App..."
+
+          scp -i first-key-pair.pem -r . ubuntu@16.170.158.63:/home/ubuntu/schoolSync-app
+
+          ssh -i first-key-pair.pem ubuntu@16.170.158.63 << EOF
+          cd /home/ubuntu/schoolSync-app
+          npm install
+          npm run build
+          pm2 restart all || pm2 start npm --name "SchoolSync" -- start
+          EOF
