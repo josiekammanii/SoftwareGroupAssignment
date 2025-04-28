@@ -1,0 +1,108 @@
+Index: src/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0\n         https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n\n  <modelVersion>4.0.0</modelVersion>\n\n  <groupId>org.example</groupId>\n  <artifactId>src</artifactId>\n  <version>1.0-SNAPSHOT</version>\n\n  <parent>\n    <groupId>org.springframework.boot</groupId>\n    <artifactId>spring-boot-starter-parent</artifactId>\n    <version>3.2.3</version>\n    <relativePath/>\n  </parent>\n\n  <properties>\n    <java.version>23</java.version>\n  </properties>\n\n  <dependencies>\n    <!-- Spring Boot  -->\n    <dependency>\n      <groupId>org.springframework.boot</groupId>\n      <artifactId>spring-boot-starter</artifactId>\n    </dependency>\n\n    <!-- Web (for web apps / APIs) -->\n    <dependency>\n      <groupId>org.springframework.boot</groupId>\n      <artifactId>spring-boot-starter-web</artifactId>\n    </dependency>\n\n    <!-- MongoDB -->\n    <dependency>\n      <groupId>org.springframework.boot</groupId>\n      <artifactId>spring-boot-starter-data-mongodb</artifactId>\n    </dependency>\n\n    <dependency>\n      <groupId>org.springframework.boot</groupId>\n      <artifactId>spring-boot-starter-test</artifactId>\n      <scope>test</scope>\n    </dependency>\n\n    <dependencies>\n      <dependency>\n        <groupId>org.mongodb</groupId>\n        <artifactId>mongodb-driver-sync</artifactId>\n        <version>5.3.0</version>\n      </dependency>\n    </dependencies>\n\n  </dependencies>\n\n  <!-- Spring Boot Maven Plugin -->\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.springframework.boot</groupId>\n        <artifactId>spring-boot-maven-plugin</artifactId>\n      </plugin>\n    </plugins>\n  </build>\n</project>\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/pom.xml b/src/pom.xml
+--- a/src/pom.xml	(revision 3b3fbb13fe1e88b2d52fd4d1420482e42738fac6)
++++ b/src/pom.xml	(date 1743687693533)
+@@ -1,11 +1,8 @@
+-<project xmlns="http://maven.apache.org/POM/4.0.0"
+-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+-         https://maven.apache.org/xsd/maven-4.0.0.xsd">
++<project>
+ 
+   <modelVersion>4.0.0</modelVersion>
+ 
+-  <groupId>org.example</groupId>
++  <groupId>org.calendar</groupId>
+   <artifactId>src</artifactId>
+   <version>1.0-SNAPSHOT</version>
+ 
+@@ -45,13 +42,11 @@
+       <scope>test</scope>
+     </dependency>
+ 
+-    <dependencies>
+       <dependency>
+         <groupId>org.mongodb</groupId>
+         <artifactId>mongodb-driver-sync</artifactId>
+         <version>5.3.0</version>
+       </dependency>
+-    </dependencies>
+ 
+   </dependencies>
+ 
+Index: src/Pupil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Pupil.java b/src/src/main/java/Pupil.java
+rename from src/Pupil.java
+rename to src/src/main/java/Pupil.java
+--- a/src/Pupil.java	(revision 3b3fbb13fe1e88b2d52fd4d1420482e42738fac6)
++++ b/src/src/main/java/Pupil.java	(date 1743688999887)
+@@ -8,12 +8,12 @@
+ import com.mongodb.client.MongoCollection;
+ import com.mongodb.client.MongoDatabase;
+ 
+-public class pupil {
++public class Pupil {
+     public static void main(String[] args ) {
+ 
+         // Replace the placeholder with your MongoDB deployment's connection string
+-        String uri = "<mongodb://localhost:27017/appdbs>";
+-
++        String uri = "mongodb://localhost:27017/appdbs";
++        System.out.print(uri)
+         try (MongoClient mongoClient = MongoClients.create(uri)) {
+             MongoDatabase database = mongoClient.getDatabase("appdbs");
+             MongoCollection<Document> collection = database.getCollection("pupils");
+@@ -26,22 +26,4 @@
+             }
+         }
+ }
+-public class Pupil {
+-
+-    public String name;
+-    public LocalDate dateOfBirth;
+-    private Integer CohortId ;
+-
+-    public Pupil(String name, LocalDate dateOfBirth) {
+-        this.name = name;
+-        this.dateOfBirth = dateOfBirth;
+-    }
+-
+-    public void findPupilbyName(){
+ 
+-    }
+-
+-
+-
+-
+-}
+Index: src/src/main/resources/META-INF/maven/application properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/src/main/resources/META-INF/maven/application properties b/src/src/main/resources/META-INF/maven/application properties
+new file mode 100644
+--- /dev/null	(date 1743628658131)
++++ b/src/src/main/resources/META-INF/maven/application properties	(date 1743628658131)
+@@ -0,0 +1,2 @@
++spring.data.mongodb.uri=mongodb://localhost:27017/appdbs
++
+diff --git a/src/Event.java b/src/src/main/java/Event.java
+rename from src/Event.java
+rename to src/src/main/java/Event.java
+diff --git a/src/Rsvp.java b/src/src/main/java/Rsvp.java
+rename from src/Rsvp.java
+rename to src/src/main/java/Rsvp.java
+diff --git a/src/Cohort.java b/src/src/main/java/Cohort.java
+rename from src/Cohort.java
+rename to src/src/main/java/Cohort.java

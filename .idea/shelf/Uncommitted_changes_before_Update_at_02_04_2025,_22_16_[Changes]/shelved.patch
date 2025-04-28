@@ -1,0 +1,11 @@
+Index: src/src/main/resources/META-INF/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/src/main/resources/META-INF/application.properties b/src/src/main/resources/META-INF/application.properties
+new file mode 100644
+--- /dev/null	(date 1743628544591)
++++ b/src/src/main/resources/META-INF/application.properties	(date 1743628544591)
+@@ -0,0 +1,1 @@
++spring.data.mongodb.uri=mongodb://localhost:27017/appdbs

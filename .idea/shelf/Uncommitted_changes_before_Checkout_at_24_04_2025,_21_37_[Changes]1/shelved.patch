@@ -1,0 +1,220 @@
+Index: src/main/java/ParentAdminApplication/Pupil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ParentAdminApplication;\nimport java.time.LocalDate;\nimport com.fasterxml.jackson.annotation.JsonIgnoreProperties;\n\n@JsonIgnoreProperties(ignoreUnknown = true)\n\npublic class Pupil {\n\n    private String id;\n    private String name;\n    private LocalDate dob;\n    private Integer cohortId;\n\n    public Pupil(String name, LocalDate dob, Integer cohortId) {\n        this.name = name;\n        this.dob = dob;\n        this.cohortId = cohortId;\n    }\n\n    public Pupil(){\n\n    }\n    public String getName(){\n        return name;\n    }\n\n    public LocalDate getDob(){\n        return dob;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/ParentAdminApplication/Pupil.java b/src/main/java/ParentAdminApplication/Pupil.java
+--- a/src/main/java/ParentAdminApplication/Pupil.java	(revision e8bad9506a7a279de81bd308d7eaef43ec9b2fc3)
++++ b/src/main/java/ParentAdminApplication/Pupil.java	(date 1744829941889)
+@@ -1,30 +1,22 @@
+ package ParentAdminApplication;
+ import java.time.LocalDate;
+-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+-
+-@JsonIgnoreProperties(ignoreUnknown = true)
+ 
+ public class Pupil {
+ 
+     private String id;
+     private String name;
+     private LocalDate dob;
+-    private Integer cohortId;
++    private String cohortId;
+ 
+-    public Pupil(String name, LocalDate dob, Integer cohortId) {
+-        this.name = name;
+-        this.dob = dob;
+-        this.cohortId = cohortId;
+-    }
++    public String getId() { return id; }
++    public void setID(String id) { this.id = id; }
+ 
+-    public Pupil(){
++    public String getName() { return name; }
++    public void setName(String name) { this.name = name; }
+ 
+-    }
+-    public String getName(){
+-        return name;
+-    }
++    public LocalDate getDob() { return dob; }
++    public void setDob(LocalDate dob) { this.dob = dob; }
+ 
+-    public LocalDate getDob(){
+-        return dob;
+-    }
++    public String getCohortId() { return cohortId; }
++    public void setCohortId(String cohortId) {this.cohortId = cohortId; }
+ }
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0\n         https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n\n  <modelVersion>4.0.0</modelVersion>\n\n  <groupId>org.example</groupId>\n  <artifactId>src</artifactId>\n  <version>1.0-SNAPSHOT</version>\n\n  <parent>\n    <groupId>org.springframework.boot</groupId>\n    <artifactId>spring-boot-starter-parent</artifactId>\n    <version>3.2.3</version>\n    <relativePath/>\n  </parent>\n\n  <properties>\n    <java.version>23</java.version>\n  </properties>\n\n  <dependencies>\n    <!-- Spring Boot  -->\n    <dependency>\n      <groupId>org.springframework.boot</groupId>\n      <artifactId>spring-boot-starter</artifactId>\n    </dependency>\n\n    <dependency>\n      <groupId>org.springframework.boot</groupId>\n      <artifactId>spring-boot-starter-web</artifactId>\n    </dependency>\n\n    <dependency>\n      <groupId>com.fasterxml.jackson.core</groupId>\n      <artifactId>jackson-databind</artifactId>\n      <version> 2.17.2 </version>\n    </dependency>\n\n    <dependency>\n      <groupId>org.springframework.boot</groupId>\n      <artifactId>spring-boot-starter-test</artifactId>\n      <scope>test</scope>\n    </dependency>\n      <dependency>\n          <groupId>org.testng</groupId>\n          <artifactId>testng</artifactId>\n          <version>RELEASE</version>\n          <scope>compile</scope>\n      </dependency>\n  </dependencies>\n\n  <!-- Spring Boot Maven Plugin -->\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.springframework.boot</groupId>\n        <artifactId>spring-boot-maven-plugin</artifactId>\n      </plugin>\n    </plugins>\n  </build>\n\n</project>\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	(revision e8bad9506a7a279de81bd308d7eaef43ec9b2fc3)
++++ b/pom.xml	(date 1744829945195)
+@@ -38,17 +38,31 @@
+       <version> 2.17.2 </version>
+     </dependency>
+ 
++    <dependency>
++        <groupId>com.fasterxml.jackson.core</groupId>
++        <artifactId>jackson-databind</artifactId>
++        <version>2.17.2</version>
++      </dependency>
++
++      <dependency>
++        <groupId>com.fasterxml.jackson.datatype</groupId>
++        <artifactId>jackson-datatype-jdk8</artifactId>
++        <version>2.15.4</version>
++      </dependency>
++
++      <dependency>
++        <groupId>com.fasterxml.jackson.datatype</groupId>
++        <artifactId>jackson-datatype-jsr310</artifactId>
++        <version>2.15.4</version>
++      </dependency>
++
+     <dependency>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-test</artifactId>
+       <scope>test</scope>
+     </dependency>
+-      <dependency>
+-          <groupId>org.testng</groupId>
+-          <artifactId>testng</artifactId>
+-          <version>RELEASE</version>
+-          <scope>compile</scope>
+-      </dependency>
++    
++
+   </dependencies>
+ 
+   <!-- Spring Boot Maven Plugin -->
+@@ -60,6 +74,6 @@
+       </plugin>
+     </plugins>
+   </build>
+-
+ </project>
+ 
++
+Index: src/main/java/ParentAdminApplication/Event.java
+===================================================================
+diff --git a/src/main/java/ParentAdminApplication/Event.java b/src/main/java/ParentAdminApplication/Event.java
+new file mode 100644
+--- /dev/null	(date 1744829945214)
++++ b/src/main/java/ParentAdminApplication/Event.java	(date 1744829945214)
+@@ -0,0 +1,47 @@
++package ParentAdminApplication;
++
++import java.time.LocalDateTime;
++import java.time.LocalDate;
++
++public class Event {
++    private String eventId;
++    private String eventName;
++    private LocalDate eventDate;
++    private LocalDateTime eventTime;
++    private String eventPlace;
++    private String cohortId;
++
++    public String getEventId() {
++        return eventId;
++    }
++    public void setEventId(String eventId) {
++        this.eventId = eventId;
++    }
++    public String getEventName() {
++        return eventName;
++    }
++    public void setEventName(String eventName) {
++        this.eventName = eventName;
++    }
++    public LocalDate getEventDate() {
++        return eventDate;
++    }
++    public void setEventDate(LocalDate eventDate) {
++        this.eventDate = eventDate;
++    }
++    public LocalDateTime getEventTime() {
++        return eventTime;
++    }
++    public void setEventTime(LocalDateTime eventTime) {
++        this.eventTime = eventTime;
++    }
++    public String getEventPlace() {
++        return eventPlace;
++    }
++    public void setEventPlace(String eventPlace) {
++        this.eventPlace = eventPlace;
++    }
++    public String getCohortId() {
++        return cohortId;
++    }
++}
+Index: src/main/java/ParentAdminApplication/EventJsonService.java
+===================================================================
+diff --git a/src/main/java/ParentAdminApplication/EventJsonService.java b/src/main/java/ParentAdminApplication/EventJsonService.java
+new file mode 100644
+--- /dev/null	(date 1744829945216)
++++ b/src/main/java/ParentAdminApplication/EventJsonService.java	(date 1744829945216)
+@@ -0,0 +1,53 @@
++package ParentAdminApplication;
++
++import com.fasterxml.jackson.core.type.TypeReference;
++import com.fasterxml.jackson.databind.ObjectMapper;
++import com.fasterxml.jackson.databind.SerializationFeature;
++import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
++import org.springframework.stereotype.Component;
++
++import java.io.File;
++import java.time.LocalDateTime;
++import java.time.LocalDate;
++import java.io.IOException;
++import java.lang.reflect.Type;
++import java.util.ArrayList;
++import java.util.List;
++
++@Component
++public class EventJsonService {
++    private ObjectMapper objectMapper;
++    private final File file = new File("src/main/events.json");
++
++    public EventJsonService() {
++        this.objectMapper = new ObjectMapper();
++        objectMapper.registerModule(new JavaTimeModule());
++        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
++    }
++    public List<Event> readEvents() throws IOException {
++        if (!file.exists()) return new ArrayList<>();
++        return objectMapper.readValue(file, new TypeReference<List<Event>>() {});
++    }
++    public void addEvent(Event event) throws IOException {
++        List<Event> events = readEvents();
++        events.add(event);
++    }
++    public void saveEvents(List<Event> events) throws IOException {
++        objectMapper.writeValue(file, events);
++    }
++    public void deleteEventbyId(String eventId) throws IOException {
++        List<Event> events = readEvents();
++        events.removeIf(event -> event.getEventId().equals(eventId));
++        saveEvents(events);
++    }
++    public boolean updateEvent(String eventId, String newPlace, String newTime) throws IOException {
++        List<Event> events = readEvents();
++        for (Event event : events) {
++            if (event.getEventId().equals(eventId)) {
++                event.setEventPlace(newPlace);
++                event.setEventTime(LocalDateTime.from(java.time.LocalTime.parse(newTime)));
++            }
++        }
++        saveEvents(events);
++    }
++}
