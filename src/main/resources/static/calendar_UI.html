@@ -72,12 +72,6 @@
         .bg-info {
             background-color: #9ab7fb !important;
         }
-
-        td small {
-            display: block;
-            font-size: 0.75rem;
-            margin-top: 2px;
-        }
     </style>
 </head>
 <body>
@@ -106,7 +100,7 @@
                 </tr>
                 </thead>
                 <tbody id="calendarBody"></tbody>
-                <td
+                <td 
             </table>
         </div>
     </div>
@@ -144,7 +138,7 @@
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
         document.getElementById("monthYear").textContent =
-            `${date.toLocaleString('default', {month: 'long'})} ${year}`;
+            `${date.toLocaleString('default', { month: 'long' })} ${year}`;
 
         const calendarBody = document.getElementById("calendarBody");
         calendarBody.innerHTML = "";
@@ -166,23 +160,17 @@
                     cell.textContent = "";
                 } else if (dateCounter <= daysInMonth) {
                     const currentDate = new Date(year, month, dateCounter);
-                    const day = dateCounter.toString().padStart(2, '0');
-                    const monthStr = (month + 1).toString().padStart(2, '0');
-                    const formattedDate = `${day}-${monthStr}-${year}`;
+                    const formattedDate = currentDate.toISOString().split("T")[0];
 
-                    const dayEvents = Array.isArray(events)
-                        ? events.filter(e => e.eventDate === formattedDate)
-                        : [];
+                    const event = Array.isArray(events)
+                        ? events.find(e => e.eventTime.startsWith(formattedDate))
+                        : null;
 
-                    if (dayEvents.length > 0) {
-                        let eventsHtml = `<strong>${dateCounter}</strong><br>`;
-                        dayEvents.forEach(event => {
-                            eventsHtml += `<small>${event.eventName}</small><br>`;
-                        });
-                        cell.innerHTML = eventsHtml;
+                    if (event) {
+                        cell.innerHTML = `<strong>${dateCounter}</strong><br><small>${event.eventName}</small>`;
                         cell.classList.add("bg-warning");
                     } else {
-                        cell.innerHTML = `<strong>${dateCounter}</strong>`;
+                        cell.textContent = dateCounter;
                     }
 
                     if (dateCounter === todayDate && month === todayMonth && year === todayYear) {
@@ -193,15 +181,12 @@
                 } else {
                     cell.textContent = "";
                 }
-                 dateCounter++;
-                } else {
-                cell.textContent = "";
-            }
+
                 row.appendChild(cell);
             }
 
             calendarBody.appendChild(row);
-    }
+        }
     }
 
     document.getElementById("prevMonth").addEventListener("click", () => {
