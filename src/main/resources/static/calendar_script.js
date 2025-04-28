@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         let date = 1;
 
         calendarBody.innerHTML = "";
-        monthYear.textContent = `${new Date(year, month).toLocaleString("default", { month: "long" })} ${year}`;
+        monthYear.textContent = `${new Date(year, month).toLocaleString("default", {month: "long"})} ${year}`;
 
         // 6 weeks to cover all cases
         for (let i = 0; i < 6; i++) {
@@ -67,8 +67,19 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             calendarBody.appendChild(row);
         }
+        events.forEach(event => {
+            const eventDate = new Date(event.eventDate);
+            if (eventDate.getMonth() === month && eventDate.getFullYear() === year) {
+                const dayCells = calendarbody.getElementsByTagName('td');
+                Array.from(dayCells).forEach(cell => {
+                    if (parseInt(cell.textContent) === eventDate.getDate()) {
+                        cell.classList.add('event-day');
+                        cell.setAttribute("title, event.eventName");
+                    }
+                });
+            }
+        });
     }
-
 
     generateCalendar(currentMonth, currentYear);
 
