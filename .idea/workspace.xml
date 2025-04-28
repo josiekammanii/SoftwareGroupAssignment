@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65fba2c9-d03e-498f-a7d0-9c08f370b564" name="Changes" comment="removing mongo">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ParentAdminApplication/Event.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ParentAdminApplication/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ParentAdminApplication/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ParentAdminApplication/JsonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ParentAdminApplication/JsonService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ParentAdminApplication/ParentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ParentAdminApplication/ParentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ParentAdminApplication/JsonServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ParentAdminApplication/JsonServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -422,7 +423,7 @@
       <workItem from="1744141377760" duration="4853000" />
       <workItem from="1744147795659" duration="18190000" />
       <workItem from="1745406284772" duration="10497000" />
-      <workItem from="1745778040875" duration="11416000" />
+      <workItem from="1745778040875" duration="13200000" />
     </task>
     <task id="LOCAL-00001" summary="Adding dependencies to connect database">
       <option name="closed" value="true" />
@@ -664,7 +665,39 @@
       <option name="project" value="LOCAL" />
       <updated>1745786762681</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="removing mongo">
+      <option name="closed" value="true" />
+      <created>1745879791897</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1745879791897</updated>
+    </task>
+    <task id="LOCAL-00032" summary="removing mongo">
+      <option name="closed" value="true" />
+      <created>1745879798624</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1745879798624</updated>
+    </task>
+    <task id="LOCAL-00033" summary="removing mongo">
+      <option name="closed" value="true" />
+      <created>1745879900796</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1745879900796</updated>
+    </task>
+    <task id="LOCAL-00034" summary="removing mongo">
+      <option name="closed" value="true" />
+      <created>1745879921818</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1745879921818</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
