@@ -33,6 +33,9 @@ function generateCalendar(date) {
                 const formattedDate = `${formattedDay}-${formattedMonth}-${year}`;
 
                 console.log("Checking Date:", formattedDate);
+                console.log("Formatted Date:", formattedDate);
+                console.log("Pupil Cohort ID:", pupil.cohortId);
+                console.log("Events Before Filtering:", events);
 
                 // Filter multiple events for the day
                 const eventsToday = events.filter(e => e.eventDate === formattedDate && e.cohortId === pupil.cohortId);
