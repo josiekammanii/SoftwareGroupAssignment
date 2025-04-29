@@ -27,34 +27,23 @@ function generateCalendar(date) {
                 cell.textContent = "";
             } else if (dateCounter <= daysInMonth) {
                 const currentDate = new Date(year, month, dateCounter);
-                const formattedDate = currentDate.toLocaleDateString('en-GB', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric'
-                });
+                const formattedDay = String(dateCounter).padStart(2, "0");
+                const formattedMonth = String(month + 1).padStart(2, "0");
+                const formattedDate = `${formattedDay}-${formattedMonth}-${year}`;
 
-                const eventsOnDay = Array.isArray(events)
-                    ? events.filter(e => e.eventDate === formattedDate)
-                    : [];
+                // Filter multiple events for the day
+                const eventsToday = events.filter(e => e.eventDate === formattedDate);
 
-                const cellContent = document.createElement("div");
-                const dayLabel = document.createElement("strong");
-                dayLabel.textContent = dateCounter;
-                cellContent.appendChild(dayLabel);
-
-                eventsOnDay.forEach(event => {
-                    const eventDiv = document.createElement("div");
-                    eventDiv.style.fontSize = "0.7rem";
-                    eventDiv.style.marginTop = "4px";
-                    eventDiv.innerHTML = `
-                        <div><strong>${event.eventName}</strong></div>
-                        <div>${event.eventTime} @ ${event.eventLocation}</div>
-                    `;
+                if (eventsToday.length > 0) {
                     cell.classList.add("bg-warning");
-                    cellContent.appendChild(eventDiv);
-                });
-
-                cell.appendChild(cellContent);
+                    let content = `<strong>${dateCounter}</strong>`;
+                    for (const evt of eventsToday) {
+                        content += `<div style="font-size: 0.75rem;"><strong>${evt.eventName}</strong><br>${evt.eventTime} @ ${evt.eventLocation}</div>`;
+                    }
+                    cell.innerHTML = content;
+                } else {
+                    cell.innerHTML = `<strong>${dateCounter}</strong>`;
+                }
 
                 if (dateCounter === todayDate && month === todayMonth && year === todayYear) {
                     cell.classList.add("bg-info", "text-white", "fw-bold");
@@ -71,3 +60,4 @@ function generateCalendar(date) {
         calendarBody.appendChild(row);
     }
 }
+
