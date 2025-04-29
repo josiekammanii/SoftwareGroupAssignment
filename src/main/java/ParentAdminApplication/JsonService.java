@@ -75,7 +75,7 @@ public class JsonService {
         mapper.registerModule(new JavaTimeModule());
 
         try {
-            File file = new File("src/main/events.json");
+            File file = new File("src/main/resources/json/event.json");
             List<Event> events = file.exists()
                     ? mapper.readValue(file, new TypeReference<List<Event>>() {})
                     : new ArrayList<>();
