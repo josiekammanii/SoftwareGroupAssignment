@@ -1,5 +1,5 @@
 package ParentAdminApplication;
-import jdk.jfr.Event;
+import ParentAdminApplication.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

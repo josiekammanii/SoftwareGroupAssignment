@@ -3,7 +3,7 @@ package ParentAdminApplication;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import jdk.jfr.Event;
+import ParentAdminApplication.Event;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -51,7 +51,7 @@ public class JsonService {
         }
     }
 
-    public List<Event> loadEvents() {
+    public List<ParentAdminApplication.Event> loadEvents() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
