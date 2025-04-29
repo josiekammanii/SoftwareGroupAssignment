@@ -16,7 +16,6 @@ function generateCalendar(date) {
     const todayYear = today.getFullYear();
 
     let dateCounter = 1;
-
     console.log("Fetched events:", events);
 
     for (let i = 0; i < 6; i++) {
@@ -32,6 +31,8 @@ function generateCalendar(date) {
                 const formattedDay = String(dateCounter).padStart(2, "0");
                 const formattedMonth = String(month + 1).padStart(2, "0");
                 const formattedDate = `${formattedDay}-${formattedMonth}-${year}`;
+
+                console.log("Checking Date:", formattedDate);
 
                 // Filter multiple events for the day
                 const eventsToday = events.filter(e => e.eventDate === formattedDate && e.cohortId === pupil.cohortId);
