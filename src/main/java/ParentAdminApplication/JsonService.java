@@ -50,15 +50,23 @@ public class JsonService {
         }
     }
 
-    public List<ParentAdminApplication.Event> loadEvents() {
+    public List<Event> loadEvents() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
+            File file = new File("src/main/json/events.json");
+            if (!file.exists()) {
+                System.out.println("Could not find events file at: " + file.getAbsolutePath());
+                return new ArrayList<>();
+            } else {
+                System.out.println("Loaded events file at: " + file.getAbsolutePath());
+            }
+
         try {
-            File file = new File("src/main/events.json");
-            return file.exists() ? mapper.readValue(file, new TypeReference<List<Event>>() {}) : new ArrayList<>();
+        return mapper.readValue(file, new TypeReference<List<Event>>() {}) ;
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load events", e);
+            System.out.println ("Error reading events json:" + e.getMessage());
+            return new ArrayList<>();
         }
     }
 
@@ -74,7 +82,7 @@ public class JsonService {
         mapper.registerModule(new JavaTimeModule());
 
         try {
-            File file = new File("src/main/events.json");
+            File file = new File("src/main/json/events.json");
             List<Event> events = file.exists()
                     ? mapper.readValue(file, new TypeReference<List<Event>>() {})
                     : new ArrayList<>();
