@@ -16,9 +16,9 @@ public class AdminController {
     }
 
     @PostMapping("/events")
-    public ResponseEntity<String> createEvent(@RequestBody Event) {
+    public ResponseEntity<String> createEvent(@RequestBody Event event) {
         try {
-            jsonService.saveEvent(Event);
+            jsonService.saveEvent(event);
             return ResponseEntity.ok("Event saved successfully");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error saving event");
