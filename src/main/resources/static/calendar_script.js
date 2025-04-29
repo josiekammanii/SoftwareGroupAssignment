@@ -99,5 +99,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             currentYear++;
         }
         generateCalendar(currentMonth, currentYear);
+
+        console.log(pupil.cohortId);
     });
 });
