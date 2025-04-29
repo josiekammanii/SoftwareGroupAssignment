@@ -17,6 +17,8 @@ function generateCalendar(date) {
 
     let dateCounter = 1;
 
+    console.log("Fetched events:", events);
+
     for (let i = 0; i < 6; i++) {
         const row = document.createElement("tr");
 
@@ -32,14 +34,14 @@ function generateCalendar(date) {
                 const formattedDate = `${formattedDay}-${formattedMonth}-${year}`;
 
                 // Filter multiple events for the day
-                const eventsToday = events.filter(e => e.eventDate === formattedDate);
+                const eventsToday = events.filter(e => e.eventDate === formattedDate && e.cohortId === pupil.cohortId);
 
                 if (eventsToday.length > 0) {
                     cell.classList.add("bg-warning");
                     let content = `<strong>${dateCounter}</strong>`;
-                    for (const evt of eventsToday) {
+                    eventsToday.forEach(evt => {
                         content += `<div style="font-size: 0.75rem;"><strong>${evt.eventName}</strong><br>${evt.eventTime} @ ${evt.eventLocation}</div>`;
-                    }
+                    });
                     cell.innerHTML = content;
                 } else {
                     cell.innerHTML = `<strong>${dateCounter}</strong>`;
