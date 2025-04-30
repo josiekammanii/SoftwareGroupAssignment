@@ -20,7 +20,7 @@ public class JsonService {
 
     public Pupil findPupilbyNameAndDob(String pupilName, LocalDateTime dobTime) {
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("src/main/events.json");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("src/main/json/pupil.json");
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
 
