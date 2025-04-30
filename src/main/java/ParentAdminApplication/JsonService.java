@@ -3,7 +3,6 @@ package ParentAdminApplication;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import jdk.jfr.Event;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -21,7 +20,7 @@ public class JsonService {
 
     public Pupil findPupilbyNameAndDob(String pupilName, LocalDateTime dobTime) {
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("json/pupils.json");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("src/main/events.json");
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
 
@@ -42,7 +41,7 @@ public class JsonService {
 
     public List<Pupil> loadPupils() {
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("json/pupils.json");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("src/main/json/pupils.json");
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             return mapper.readValue(inputStream, new TypeReference<List<Pupil>>() {});
@@ -55,11 +54,19 @@ public class JsonService {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
+            File file = new File("src/main/json/events.json");
+            if (!file.exists()) {
+                System.out.println("Could not find events file at: " + file.getAbsolutePath());
+                return new ArrayList<>();
+            } else {
+                System.out.println("Loaded events file at: " + file.getAbsolutePath());
+            }
+
         try {
-            File file = new File("src/main/events.json");
-            return file.exists() ? mapper.readValue(file, new TypeReference<List<Event>>() {}) : new ArrayList<>();
+        return mapper.readValue(file, new TypeReference<List<Event>>() {}) ;
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load events", e);
+            System.out.println ("Error reading events json:" + e.getMessage());
+            return new ArrayList<>();
         }
     }
 
@@ -75,7 +82,7 @@ public class JsonService {
         mapper.registerModule(new JavaTimeModule());
 
         try {
-            File file = new File("src/main/events.json");
+            File file = new File("src/main/json/events.json");
             List<Event> events = file.exists()
                     ? mapper.readValue(file, new TypeReference<List<Event>>() {})
                     : new ArrayList<>();

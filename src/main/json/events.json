@@ -4,34 +4,34 @@
     "eventLocation": "Hollywood bowl",
     "eventDate": "23-05-2025",
     "eventTime": "13:00",
-    "cohortID": "1"
+    "cohortId": "1"
   },
   {
     "eventName": "Cinema Trip",
     "eventLocation": "Vue",
     "eventDate": "05-05-2025",
     "eventTime": "11:30",
-    "cohortID": "1"
+    "cohortId": "1"
   },
   {
     "eventName": "Parent's evening",
     "eventLocation": "St Peter's Church",
     "eventDate": "10-05-2025",
     "eventTime": "18:00",
-    "cohortID": "1"
+    "cohortId": "1"
   },
   {
     "eventName": "Residential Trip",
     "eventLocation": "Kentwood",
     "eventDate": "11-05-2025",
     "eventTime": "11:30",
-    "cohortID": "2"
+    "cohortId": "2"
   },
   {
     "eventName": "School Disco",
     "eventLocation": "Town Hall",
     "eventDate": "19-05-2025",
     "eventTime": "18:30",
-    "cohortID": "2"
+    "cohortId": "2"
   }
 ]

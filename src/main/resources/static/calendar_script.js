@@ -1,92 +1,69 @@
-// calendar.js
+function generateCalendar(date) {
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-document.addEventListener('DOMContentLoaded', async function () {
-    const calendarBody = document.getElementById('calendarBody');
-    const monthYear = document.getElementById('monthYear');
-    const prevMonth = document.getElementById('prevMonth');
-    const nextMonth = document.getElementById('nextMonth');
+    document.getElementById("monthYear").textContent =
+        `${date.toLocaleString('default', { month: 'long' })} ${year}`;
+
+    const calendarBody = document.getElementById("calendarBody");
+    calendarBody.innerHTML = "";
 
     const today = new Date();
-    let currentMonth = today.getMonth();
-    let currentYear = today.getFullYear();
-    let events = [];
+    const todayDate = today.getDate();
+    const todayMonth = today.getMonth();
+    const todayYear = today.getFullYear();
 
-    const months = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-    ];
+    let dateCounter = 1;
+    console.log("Fetched events:", events);
 
-    const pupil = JSON.parse(localStorage.getItem("pupil"));
-    if (pupil) {
-        try {
-            const response = await fetch(`http://localhost:8080/api/events/${pupil.cohortId}`);
-            events = await response.json();
-        } catch (error) {
-            console.error("Could not load events", error);
-        }
-    }
+    for (let i = 0; i < 6; i++) {
+        const row = document.createElement("tr");
 
-    function generateCalendar(month, year) {
-        const firstDay = new Date(year, month, 1).getDay(); // 0 = Sun, 1 = Mon, ...
-        const daysInMonth = new Date(year, month + 1, 0).getDate(); // How many days in month
-        let date = 1;
+        for (let j = 0; j < 7; j++) {
+            const cell = document.createElement("td");
 
-        calendarBody.innerHTML = "";
-        monthYear.textContent = `${new Date(year, month).toLocaleString("default", { month: "long" })} ${year}`;
+            if (i === 0 && j < firstDay) {
+                cell.textContent = "";
+            } else if (dateCounter <= daysInMonth) {
+                const currentDate = new Date(year, month, dateCounter);
+                const formattedDay = String(dateCounter).padStart(2, "0");
+                const formattedMonth = String(month + 1).padStart(2, "0");
+                const formattedDate = `${formattedDay}-${formattedMonth}-${year}`;
 
-        // 6 weeks to cover all cases
-        for (let i = 0; i < 6; i++) {
-            const row = document.createElement("tr");
+                console.log("Checking Date:", formattedDate);
+                console.log("Formatted Date:", formattedDate);
+                console.log("Pupil Cohort ID:", pupil.cohortId);
+                console.log("Events Before Filtering:", events);
 
-            for (let j = 0; j < 7; j++) {
-                const cell = document.createElement("td");
+                // Filter multiple events for the day
+                const eventsToday = events.filter(e => e.eventDate === formattedDate && e.cohortId === pupil.cohortId);
 
-                // Skip cells before first day of the month
-                if (i === 0 && j < firstDay) {
-                    cell.textContent = "";
-                } else if (date > daysInMonth) {
-                    // Don't add more dates once we pass the max
-                    cell.textContent = "";
+                if (eventsToday.length > 0) {
+                    cell.classList.add("bg-warning");
+                    let content = `<strong>${dateCounter}</strong>`;
+                    eventsToday.forEach(evt => {
+                        content += `<div style="font-size: 0.75rem;"><strong>${evt.eventName}</strong><br>${evt.eventTime} @ ${evt.eventLocation}</div>`;
+                    });
+                    cell.innerHTML = content;
                 } else {
-                    cell.textContent = date;
-
-                    // OPTIONAL: Highlight today
-                    if (
-                        date === today.getDate() &&
-                        month === today.getMonth() &&
-                        year === today.getFullYear()
-                    ) {
-                        cell.classList.add("current-day");
-                    }
-
-                    date++; // move to next date
+                    cell.innerHTML = `<strong>${dateCounter}</strong>`;
                 }
 
-                row.appendChild(cell);
+                if (dateCounter === todayDate && month === todayMonth && year === todayYear) {
+                    cell.classList.add("bg-info", "text-white", "fw-bold");
+                }
+
+                dateCounter++;
+            } else {
+                cell.textContent = "";
             }
 
-            calendarBody.appendChild(row);
+            row.appendChild(cell);
         }
+
+        calendarBody.appendChild(row);
     }
+}
 
-
-    generateCalendar(currentMonth, currentYear);
-
-    prevMonth.addEventListener('click', function () {
-        currentMonth--;
-        if (currentMonth < 0) {
-            currentMonth = 11;
-            currentYear--;
-        }
-        generateCalendar(currentMonth, currentYear);
-    });
-
-    nextMonth.addEventListener('click', function () {
-        currentMonth++;
-        if (currentMonth > 11) {
-            currentMonth = 0;
-            currentYear++;
-        }
-        generateCalendar(currentMonth, currentYear);
-    });
-});

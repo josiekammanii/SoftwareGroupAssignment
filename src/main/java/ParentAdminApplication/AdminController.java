@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class AdminController {
@@ -24,5 +27,17 @@ public class AdminController {
             return ResponseEntity.status(500).body("Error saving event");
         }
     }
-}
+
+        @GetMapping("/events/{cohortId}")
+        public ResponseEntity<List<Event>> getEventsByCohort (@PathVariable Integer cohortId){
+            List<Event> events = jsonService.getEventsByCohortId(cohortId);
+
+            if (events.isEmpty()) {
+                return ResponseEntity.status(404).body(new ArrayList<>());
+            }
+            return ResponseEntity.ok(events);
+        }
+    }
+
+
 
