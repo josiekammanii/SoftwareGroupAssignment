@@ -20,11 +20,33 @@ public class Pupil {
     public Pupil(){
 
     }
+    public String getId() {
+        return id;
+    }
     public String getName(){
         return name;
     }
 
     public LocalDate getDob(){
         return dob;
+    }
+    public Integer getCohortId(){
+        return cohortId;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
+    public void setCohortId(Integer cohortId) {
+        this.cohortId = cohortId;
+
     }
 }

@@ -8,22 +8,21 @@ import com.fasterxml.jackson.annotation.JsonFormat;
         private String eventId;
         private String eventName;
 
-        @JsonFormat(pattern = "dd-MM-yyyy")
+        @JsonFormat(pattern = "DD-MM-YYYY")
         private String eventDate;
 
         private String eventTime;
-        private String location;
+        private String eventLocation;
         private Integer cohortId;
 
-        public Event() {
-        }
+        public Event() {}
 
-        public Event(String eventId, String eventName, String eventDate, String eventTime, String location, Integer cohortId) {
+        public Event(String eventId, String eventName, String eventDate, String eventTime, String eventLocation, Integer cohortId) {
             this.eventId = eventId;
             this.eventName = eventName;
             this.eventDate = eventDate;
             this.eventTime = eventTime;
-            this.location = location;
+            this.eventLocation = eventLocation;
             this.cohortId = cohortId;
         }
 
@@ -43,8 +42,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
             return eventTime;
         }
 
-        public String getLocation() {
-            return location;
+        public String getEventLocation() {
+            return eventLocation;
         }
 
         public Integer getCohortId() {
@@ -67,8 +66,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
             this.eventTime = eventTime;
         }
 
-        public void setLocation(String location) {
-            this.location = location;
+        public void setEventLocation(String eventLocation) {
+            this.eventLocation = eventLocation;
         }
 
         public void setCohortId(Integer cohortId) {
