@@ -1,0 +1,103 @@
+[
+  {
+    "id": "1",
+    "name": "James Radcliffe",
+    "dob": "2005-04-23",
+    "cohortId": 1
+  },
+  {
+    "id": "2",
+    "name": "Olu Smith" ,
+    "dob": "2005-07-21",
+    "cohortId": 1
+  },
+  {
+    "id": "3",
+    "name": "Suzanna Williams",
+    "dob": "2004-03-08",
+    "cohortId": 2
+  },
+  {
+    "id": "4",
+    "name": "Liam Noris",
+    "dob": "2006-11-18",
+    "cohortId": 2
+  },
+  {
+    "id": "5",
+    "name": "Jane Lois",
+    "dob": "2004-12-08",
+    "cohortId": 1
+  },
+  {
+    "id": "6",
+    "name": "Aisha Rahman",
+    "dob": "2013-11-30",
+    "cohortId": 1
+  },
+  {
+    "id": "5",
+    "name": "Ethan Brown",
+    "dob": "2013-06-25",
+    "cohortId": 2
+  },
+  {
+    "id": "6",
+    "name": "Amelia Okafor",
+    "dob": "2015-10-14",
+    "cohortId": 1
+  },
+  {
+    "id": "7",
+    "name": "Lucas Kim",
+    "dob": "2014-03-17",
+    "cohortId": 2
+  },
+  {
+    "id": "8",
+    "name": "Maya Garcia",
+    "dob": "2013-09-09",
+    "cohortId": 2
+  },
+  {
+    "id": "9",
+    "name": "Isaac Mensah",
+    "dob": "2015-01-22",
+    "cohortId": 2
+  },
+  {
+    "id": "10",
+    "name": "Sofia Nguyen",
+    "dob": "2014-07-18",
+    "cohortId": "1"
+  },
+  {
+    "id": "11",
+    "name": "Harper Green",
+    "dob": "2013-10-05",
+    "cohortId": 2
+  },
+  {
+    "id": "12",
+    "name": "Joshua Adeyemi",
+    "dob": "2015-12-29",
+    "cohortId": 1
+  },
+  {
+    "id": "13",
+    "name": "Chloe O'Brien",
+    "dob": "2014-04-11",
+    "cohortId": 2
+  },
+  {
+    "id": "14",
+    "name": "Nathan Zhang",
+    "dob": "2013-08-03",
+    "cohortId": 2
+  }
+
+]
+
+
+
+

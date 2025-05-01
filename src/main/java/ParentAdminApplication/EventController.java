@@ -17,7 +17,7 @@ public class EventController {
         this.jsonService = jsonService;
     }
 
-    @GetMapping("/events/{cohortID}")
+    @GetMapping("/parents-events/{cohortId}")
     public ResponseEntity<List<Event>> getEventsByCohort(@PathVariable Integer cohortID) {
         try {
             List<Event> events = jsonService.getEventsByCohortId(cohortID);

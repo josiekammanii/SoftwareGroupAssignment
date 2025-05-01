@@ -17,10 +17,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class JsonService {
+    private static final String EVENTS_FILE_PATH = "data/events.json";
 
     public Pupil findPupilbyNameAndDob(String pupilName, LocalDateTime dobTime) {
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("src/main/events.json");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("json/pupils.json");
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
 
@@ -41,12 +42,13 @@ public class JsonService {
 
     public List<Pupil> loadPupils() {
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("src/main/json/pupils.json");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("src/main/resources/json/pupils.json");
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             return mapper.readValue(inputStream, new TypeReference<List<Pupil>>() {});
         } catch (IOException e) {
-            throw new RuntimeException("Could not load or read pupils.json", e);
+            System.err.println("Error loading pupils.json: " + e.getMessage());
+            return new ArrayList<>();
         }
     }
 
@@ -54,7 +56,8 @@ public class JsonService {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
-            File file = new File("src/main/json/events.json");
+            File file = new File(EVENTS_FILE_PATH);
+            System.out.println("Loading events from: " + file.getAbsolutePath()); // Debug
             if (!file.exists()) {
                 System.out.println("Could not find events file at: " + file.getAbsolutePath());
                 return new ArrayList<>();
@@ -72,26 +75,24 @@ public class JsonService {
 
     public List<Event> getEventsByCohortId(Integer cohortId) {
         List<Event> allEvents = loadEvents();
+        System.out.println("All events before filtering: " + allEvents);
         return allEvents.stream()
                 .filter(event -> event.getCohortId().equals(cohortId))
                 .collect(Collectors.toList());
     }
 
-    public static void saveEvent(Event event) {
+    public void saveEvent(Event event) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
         try {
-            File file = new File("src/main/json/events.json");
-            List<Event> events = file.exists()
-                    ? mapper.readValue(file, new TypeReference<List<Event>>() {})
-                    : new ArrayList<>();
-
+            List<Event> events = loadEvents();
             if (event.getEventId() == null || event.getEventId().isEmpty()) {
                 event.setEventId(UUID.randomUUID().toString());
             }
 
             events.add(event);
+            File file = new File(EVENTS_FILE_PATH);
             mapper.writeValue(file, events);
         } catch (IOException e) {
             throw new RuntimeException("Failed to save event", e);

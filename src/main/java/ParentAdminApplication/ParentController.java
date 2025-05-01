@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class ParentController {
@@ -23,12 +23,15 @@ public class ParentController {
         System.out.println("Received name: " + name);
         System.out.println("Received dob: " + dob);
 
-        Pupil pupil = jsonService.findPupilbyNameAndDob(name, dob.atStartOfDay());
-
-        if (pupil == null) {
-            return ResponseEntity.status(401).body("This pupil does not exist");
-        } else {
+        try {
+            Pupil pupil = jsonService.findPupilbyNameAndDob(name, dob.atStartOfDay());
+            if (pupil == null) {
+                return ResponseEntity.status(401).body("This pupil does not exist");
+            }
             return ResponseEntity.ok(pupil);
+        } catch (Exception e) {
+            System.err.println("Error during login: " + e.getMessage());
+            return ResponseEntity.status(500).body("Error processing login request: " + e.getMessage());
         }
     }
 
