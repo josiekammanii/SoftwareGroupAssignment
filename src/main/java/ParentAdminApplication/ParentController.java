@@ -35,7 +35,7 @@ public class ParentController {
         }
     }
 
-    @GetMapping("/api/events/{cohortId}")
+    @GetMapping("/events/{cohortId}")
     public ResponseEntity<?> getEventsByCohort(@PathVariable Integer cohortId) {
         List<Event> events = jsonService.getEventsByCohortId(cohortId);
         return ResponseEntity.ok(events);
