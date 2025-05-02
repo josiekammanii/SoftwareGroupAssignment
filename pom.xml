@@ -47,6 +47,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>4.12.0</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
       <version>7.8.0</version> <!-- Specify a concrete version instead of RELEASE -->
