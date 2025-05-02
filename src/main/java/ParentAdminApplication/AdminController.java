@@ -9,7 +9,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/events")
 public class AdminController {
 
     private final JsonService jsonService;
@@ -19,7 +19,18 @@ public class AdminController {
         this.jsonService = jsonService;
     }
 
-    @PostMapping("/events")
+    @GetMapping
+    public ResponseEntity<List<Event>> getAllEvents() {
+        try {
+            List<Event> events = jsonService.loadEvents();
+            return ResponseEntity.ok(events);
+        } catch (Exception e) {
+            System.err.println("Error fetching events: " + e.getMessage());
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    @PostMapping
     public ResponseEntity<String> createEvent(@RequestBody Event event) {
         try {
             jsonService.saveEvent(event);
@@ -29,6 +40,7 @@ public class AdminController {
         }
     }
 
+
         @GetMapping("/events/{cohortId}")
         public ResponseEntity<List<Event>> getEventsByCohort (@PathVariable Integer cohortId){
             List<Event> events = jsonService.getEventsByCohortId(cohortId);
@@ -37,6 +49,31 @@ public class AdminController {
                 return ResponseEntity.status(404).body(new ArrayList<>());
             }
             return ResponseEntity.ok(events);
+        }
+
+        @PutMapping("/{eventId}")
+        public ResponseEntity<String> updateEvent(@PathVariable String eventId, @RequestBody Event event) {
+            try {
+                event.setEventId(eventId);
+                System.out.println("Received updated event: " + event);
+                jsonService.updateEvent(event);
+                return ResponseEntity.ok("Event updated successfully");
+            } catch (Exception e) {
+                System.err.println("Error updating event: " + e.getMessage());
+                return ResponseEntity.status(500).body("Error updating event");
+            }
+        }
+
+        @DeleteMapping("/{eventId}")
+        public ResponseEntity<String> deleteEvent(@PathVariable String eventId) {
+            try {
+                System.out.println("Deleting event with ID: " + eventId);
+                jsonService.deleteEvent(eventId);
+                return ResponseEntity.ok("Event deleted successfully");
+            } catch (Exception e) {
+                System.err.println("Error deleting event: " + e.getMessage());
+                return ResponseEntity.status(500).body("Error deleting event");
+            }
         }
     }
 

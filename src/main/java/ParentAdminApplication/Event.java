@@ -7,10 +7,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
         private String eventId;
         private String eventName;
-
         @JsonFormat(pattern = "DD-MM-YYYY")
         private String eventDate;
-
         private String eventTime;
         private String eventLocation;
         private Integer cohortId;
@@ -63,7 +61,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
         }
 
         public void setEventTime(String eventTime) {
-            this.eventTime = eventTime;
+            if (eventTime != null && eventTime.contains("T")) {
+                // Handle combined format "2025-06-07T16:30"
+                String[] parts = eventTime.split("T");
+                if (parts.length == 2) {
+                    // Convert "2025-06-07" to "07-06-2025"
+                    String[] dateParts = parts[0].split("-");
+                    this.eventDate = String.format("%s-%s-%s", dateParts[2], dateParts[1], dateParts[0]);
+                    // Extract "16:30"
+                    this.eventTime = parts[1];
+                }
+            } else {
+                this.eventTime = eventTime;
+            }
         }
 
         public void setEventLocation(String eventLocation) {
