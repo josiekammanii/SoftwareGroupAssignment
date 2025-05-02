@@ -73,6 +73,10 @@
         .bg-info {
             background-color: #9ab7fb !important;
         }
+
+        .modal-dialog {
+            transition: none !important;
+        }
     </style>
 </head>
 <body>
@@ -100,7 +104,6 @@
                 </tr>
                 </thead>
                 <tbody id="calendarBody"></tbody>
-                <td 
             </table>
         </div>
     </div>
@@ -127,19 +130,20 @@
     </div>
 </div>
 
-<div class="modal" id="RSVPYorNModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
+<div class="modal" id="RSVPYorNModal" tabindex="-1" aria-labelledby="rsvpModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="eventDetailsModalLabel">Will you be attending this?</h5>
+                <h5 class="modal-title" id="rsvpModalLabel">Will you be attending this?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="mb-3">
                 <label for="YesOrNo" class="form-label">Please enter Yes or No</label>
-              </div>
-              <div id="successMessage" class="success-message mb-3"></div>
+                <input type="text" class="form-control" id="YesOrNo" placeholder="Yes or No">
+            </div>
+            <div id="successMessage" class="success-message mb-3"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="RSVP">Submit</button>
+                <button type="button" class="btn btn-primary" id="RSVPSubmit">Submit</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -151,6 +155,7 @@
 <script>
     let events = [];
     let currentDate = new Date();
+    let rsvpData = JSON.parse(localStorage.getItem("rsvpData")) || [];
 
     document.addEventListener("DOMContentLoaded", async () => {
         const pupil = JSON.parse(localStorage.getItem("pupil"));
@@ -169,6 +174,12 @@
             } catch (err) {
                 console.error("Could not fetch events:", err);
             }
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.addEventListener('show.bs.modal', function (e) {
+                    this.classList.remove('fade');
+                });
+            });
         }
 
         generateCalendar(currentDate);
@@ -236,31 +247,48 @@
         }
     }
 
-    // Function to show event details in the modal
     function showEventDetails(event) {
         const cell = event.currentTarget;
         const eventData = JSON.parse(cell.dataset.event);
 
-        // Populate the modal with event details
         document.getElementById("eventName").textContent = eventData.eventName;
         document.getElementById("eventLocation").textContent = eventData.eventLocation;
         document.getElementById("eventDate").textContent = eventData.eventDate;
         document.getElementById("eventTime").textContent = eventData.eventTime;
 
-        // Show the modal
         const modal = new bootstrap.Modal(document.getElementById("eventDetailsModal"));
         modal.show();
 
-        // Add RSVP button functionality
-        document.getElementById("RSVP").onclick = function () {
+        const rsvpButton = document.getElementById("RSVP");
+        rsvpButton.onclick = function () {
+            modal.hide();
             const rsvpModal = new bootstrap.Modal(document.getElementById("RSVPYorNModal"));
             rsvpModal.show();
+        };
 
-            document.getElementById("RSVP").onclick = async function () {
-                const rsvpResponse = document.getElementById("YesOrNo").value;
-                const msgBox = document.getElementById("successMessage");
+        document.getElementById("RSVPSubmit").onclick = function () {
+            const rsvpResponse = document.getElementById("YesOrNo").value.trim().toLowerCase();
+            const msgBox = document.getElementById("successMessage");
+            if (rsvpResponse === "yes" || rsvpResponse === "no") {
+                msgBox.textContent = `RSVP submitted: ${rsvpResponse}!`;
+                msgBox.classList.add("text-success");
 
-            };
+                const pupil = JSON.parse(localStorage.getItem("pupil"));
+                const rsvpEntry = {
+                    childName: pupil ? pupil.name : "Unknown Child",
+                    eventId: eventData.eventId || "E" + Math.random().toString(36).substr(2, 9),
+                    rsvpStatus: rsvpResponse.charAt(0).toUpperCase() + rsvpResponse.slice(1)
+                };
+                rsvpData.push(rsvpEntry);
+                localStorage.setItem("rsvpData", JSON.stringify(rsvpData));
+
+                setTimeout(() => {
+                    rsvpModal.hide();
+                }, 1000);
+            } else {
+                msgBox.textContent = "Please enter 'Yes' or 'No'!";
+                msgBox.classList.add("text-danger");
+            }
         };
     }
 
@@ -277,5 +305,4 @@
 
 </body>
 </html>
-
-
+    
