@@ -73,6 +73,10 @@ public class JsonService {
         }
     }
 
+    public List<Event> getAllEvents() {
+        return loadEvents(); 
+    }
+
     public List<Event> getEventsByCohortId(Integer cohortId) {
         List<Event> allEvents = loadEvents();
         System.out.println("All events before filtering: " + allEvents);
@@ -91,11 +95,71 @@ public class JsonService {
                 event.setEventId(UUID.randomUUID().toString());
             }
 
+            System.out.println("New event to add: " + event);
             events.add(event);
+            System.out.println("Events after adding: " + events);
             File file = new File(EVENTS_FILE_PATH);
+            System.out.println("Saving events to: " + file.getAbsolutePath());
             mapper.writeValue(file, events);
+            System.out.println("Events saved successfully");
         } catch (IOException e) {
+            System.err.println("Failed to save event: " + e.getMessage());
             throw new RuntimeException("Failed to save event", e);
+        }
+    }
+
+    public void updateEvent(Event event) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
+        try {
+            List<Event> events = loadEvents();
+            boolean eventUpdated = false;
+            for (int i = 0; i < events.size(); i++) {
+                if (events.get(i).getEventId().equals(event.getEventId())) {
+                    events.set(i, event);
+                    eventUpdated = true;
+                    break;
+                }
+            }
+            if (!eventUpdated) {
+                System.out.println("Event with ID " + event.getEventId() + " not found for update.");
+                return;
+            }
+
+            System.out.println("Updated event: " + event);
+            System.out.println("Events after updating: " + events);
+            File file = new File(EVENTS_FILE_PATH);
+            System.out.println("Saving events to: " + file.getAbsolutePath());
+            mapper.writeValue(file, events);
+            System.out.println("Events saved successfully");
+        } catch (IOException e) {
+            System.err.println("Failed to update event: " + e.getMessage());
+            throw new RuntimeException("Failed to update event", e);
+        }
+    }
+
+    public void deleteEvent(String eventId) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        
+        try {
+            List<Event> events = loadEvents();
+            boolean eventRemoved = events.removeIf(event -> event.getEventId().equals(eventId));
+            if (!eventRemoved) {
+                System.out.println("Event with ID " + eventId + " not found for deletion.");
+                return;
+            }
+
+            System.out.println("Deleted event with ID: " + eventId);
+            System.out.println("Events after deleting: " + events);
+            File file = new File(EVENTS_FILE_PATH);
+            System.out.println("Saving events to: " + file.getAbsolutePath());
+            mapper.writeValue(file, events);
+            System.out.println("Events saved successfully");
+        } catch (IOException e) {
+            System.err.println("Failed to delete event: " + e.getMessage());
+            throw new RuntimeException("Failed to delete event", e);
         }
     }
 }

@@ -83,9 +83,15 @@
     </div>
 
     <div class="mb-3">
-      <label for="eventTime" class="form-label">Event Date & Time</label>
-      <input type="datetime-local" class="form-control" id="eventTime" required>
-      <div class="preview" id="datetimePreview"></div>
+      <label for="eventDate" class="form-label">Event Date</label>
+      <input type="date" class="form-control" id="eventDate" required>
+      <div class="preview" id="datePreview"></div>
+  </div>
+
+    <div class="mb-3">
+      <label for="eventTime" class="form-label">Event Time</label>
+      <input type="time" class="form-control" id="eventTime" required>
+      <div class="preview" id="timePreview"></div>
     </div>
 
     <div class="mb-3">
@@ -94,8 +100,8 @@
     </div>
 
     <div class="mb-3">
-      <label for="location" class="form-label">Location</label>
-      <input type="text" class="form-control" id="location" rows="3" placeholder="Hyde Park , London" required>
+      <label for="eventLocation" class="form-label">Location</label>
+      <input type="text" class="form-control" id="eventLocation" placeholder="Hyde Park , London" required>
     </div>
     <div id="successMessage" class="success-message mb-3"></div>
 
@@ -105,18 +111,49 @@
 
 <!-- Script -->
 <script>
-  const preview = document.getElementById("datetimePreview");
-  const input = document.getElementById("eventTime");
+  const datePreview = document.getElementById("datePreview");
+  const timePreview = document.getElementById("timePreview");
+  const timeInput = document.getElementById("eventTime");
+  const dateInput = document.getElementById("eventDate");
 
+  // Preview the formatted date
+  dateInput.addEventListener("input", () => {
+        const dateValue = dateInput.value; // e.g., "2025-05-02"
+        if (dateValue) {
+            const [year, month, day] = dateValue.split("-");
+            datePreview.textContent = `Selected Date: ${day}-${month}-${year}`; // e.g., "02-05-2025"
+        } else {
+            datePreview.textContent = "";
+        }
+    });
+
+    // Preview the time
+    timeInput.addEventListener("input", () => {
+        const timeValue = timeInput.value; 
+        timePreview.textContent = timeValue ? `Selected Time: ${timeValue}` : "";
+    });
 
   document.getElementById("event-form").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const name = document.getElementById("eventName").value;
-    const eventTime = document.getElementById("eventTime").value;
+    const dateValue = document.getElementById("eventDate").value;
+    const timeValue = document.getElementById("eventTime").value;
     const cohortId = parseInt(document.getElementById("cohortId").value);
+    const eventLocation= document.getElementById("eventLocation").value;
 
-    const newEvent = { eventName: name, eventTime: eventTime, cohortId: cohortId };
+    let eventDate = "";
+        if (dateValue) {
+            const [year, month, day] = dateValue.split("-");
+            eventDate = `${day}-${month}-${year}`; 
+        }
+
+    const newEvent = { eventName: name, 
+      eventDate: eventDate, 
+      eventTime: timeValue, 
+      eventLocation:eventLocation, 
+      cohortId: cohortId };
+      
     const msgBox = document.getElementById("successMessage");
 
     try {
@@ -131,7 +168,8 @@
         msgBox.classList.remove("text-danger");
         msgBox.classList.add("text-success");
         document.getElementById("event-form").reset();
-        preview.textContent = "";
+        datePreview.textContent = "";
+        timePreview.textContent = "";
 
         confetti({
           particleCount: 100,
@@ -155,6 +193,4 @@
 
 </body>
 </html>
-
-
 
