@@ -1,4 +1,4 @@
-name: Build and Deploy Project
+name: My First Deploy to AWS
 
 # When to trigger? when someone pushes code to the main branch
 on:
@@ -16,29 +16,50 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3 #pulls up a clone
       
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Java JDK (I think I need version 17)
+        uses: actions/setup-java@v3
         with:
-          node-version: '18'
+          java-version: '17'  
+          distribution: 'temurin'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      
 
-      - name: Run tests
-        run: npm test
-
-      - name: Build the app
-        run: npm run build
-
-      - name: Deploy to AWS server
+      - name: Build My App with Maven
         run: |
-          echo "Deploying Node.js App..."
+          echo "Building my app now..."
+          mvn clean package -DskipTests
 
-          scp -i first-key-pair.pem -r . ubuntu@16.170.158.63:/home/ubuntu/schoolSync-app
+      - name: Deploy SchoolSync App to AWS EC2
+        env:
+          EC2_KEY: ${{ secrets.EC2_KEY }}
+          EC2_HOST: 16.170.158.63
+        run: |
+          echo "Deploying to AWS now..."
 
-          ssh -i first-key-pair.pem ubuntu@16.170.158.63 << EOF
-          cd /home/ubuntu/schoolSync-app
-          npm install
-          npm run build
-          pm2 restart all || pm2 start npm --name "SchoolSync" -- start
+          # Write the EC2 key to a file
+          echo "$EC2_KEY" > first-key-pair.pem
+          chmod 400 first-key-pair.pem
+
+          # Copy the built .jar file to EC2
+          scp -i first-key-pair.pem -o StrictHostKeyChecking=no target/*.jar ubuntu@$EC2_HOST:/home/ubuntu/schoolSync-app.jar
+
+          # SSH into EC2 and restart the app
+          ssh -i first-key-pair.pem -o StrictHostKeyChecking=no ubuntu@$EC2_HOST << EOF
+            # Stop any existing instance of the app (if using systemd)
+            sudo systemctl stop schoolSync || true
+
+            # Move the new .jar file
+            mv /home/ubuntu/schoolSync.jar /home/ubuntu/schoolSync/schoolSync.jar
+
+            nohup java -jar /home/ubuntu/schoolSync/schoolSync.jar &
           EOF
+
+          echo "Cleaning up..."
+          rm first-key-pair.pem
