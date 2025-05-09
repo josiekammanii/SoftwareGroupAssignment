@@ -1,8 +1,8 @@
 [
   {
-    "id": "",
-    "pupilId": "",
-    "eventId": "",
-    "status": ""
+    "id": "1",
+    "eventId": "1",
+    "pupilId": "1",
+    "rsvpStatus": "yes"
   }
 ]

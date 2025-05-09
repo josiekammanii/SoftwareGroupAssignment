@@ -10,17 +10,17 @@ import java.util.List;
 @RequestMapping
 public class EventController {
 
-    private final JsonService jsonService;
+    private final eventJsonService eventJsonService;
 
     @Autowired
-    public EventController(JsonService jsonService) {
-        this.jsonService = jsonService;
+    public EventController(eventJsonService eventJsonService) {
+        this.eventJsonService = eventJsonService;
     }
 
     @GetMapping("/parents-events/{cohortId}")
     public ResponseEntity<List<Event>> getEventsByCohort(@PathVariable Integer cohortID) {
         try {
-            List<Event> events = jsonService.getEventsByCohortId(cohortID);
+            List<Event> events = eventJsonService.getEventsByCohortId(cohortID);
             return ResponseEntity.ok(events);
         } catch (Exception e) {
            return ResponseEntity.status(500).build();

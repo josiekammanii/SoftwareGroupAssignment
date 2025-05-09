@@ -12,17 +12,17 @@ import java.util.List;
 @RequestMapping("/api/events")
 public class AdminController {
 
-    private final JsonService jsonService;
+    private final eventJsonService eventJsonService;
 
     @Autowired
-    public AdminController(JsonService jsonService) {
-        this.jsonService = jsonService;
+    public AdminController(eventJsonService eventJsonService) {
+        this.eventJsonService = eventJsonService;
     }
 
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents() {
         try {
-            List<Event> events = jsonService.loadEvents();
+            List<Event> events = eventJsonService.loadEvents();
             return ResponseEntity.ok(events);
         } catch (Exception e) {
             System.err.println("Error fetching events: " + e.getMessage());
@@ -33,7 +33,7 @@ public class AdminController {
     @PostMapping
     public ResponseEntity<String> createEvent(@RequestBody Event event) {
         try {
-            jsonService.saveEvent(event);
+            eventJsonService.saveEvent(event);
             return ResponseEntity.ok("Event saved successfully");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error saving event");
@@ -43,7 +43,7 @@ public class AdminController {
 
         @GetMapping("/events/{cohortId}")
         public ResponseEntity<List<Event>> getEventsByCohort (@PathVariable Integer cohortId){
-            List<Event> events = jsonService.getEventsByCohortId(cohortId);
+            List<Event> events = eventJsonService.getEventsByCohortId(cohortId);
 
             if (events.isEmpty()) {
                 return ResponseEntity.status(404).body(new ArrayList<>());
@@ -56,7 +56,7 @@ public class AdminController {
             try {
                 event.setEventId(eventId);
                 System.out.println("Received updated event: " + event);
-                jsonService.updateEvent(event);
+                eventJsonService.updateEvent(event);
                 return ResponseEntity.ok("Event updated successfully");
             } catch (Exception e) {
                 System.err.println("Error updating event: " + e.getMessage());
@@ -68,7 +68,7 @@ public class AdminController {
         public ResponseEntity<String> deleteEvent(@PathVariable String eventId) {
             try {
                 System.out.println("Deleting event with ID: " + eventId);
-                jsonService.deleteEvent(eventId);
+                eventJsonService.deleteEvent(eventId);
                 return ResponseEntity.ok("Event deleted successfully");
             } catch (Exception e) {
                 System.err.println("Error deleting event: " + e.getMessage());

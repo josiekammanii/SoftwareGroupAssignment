@@ -13,7 +13,7 @@ import java.util.List;
 public class ParentController {
 
     @Autowired
-    private JsonService jsonService;
+    private eventJsonService eventJsonService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
@@ -24,7 +24,7 @@ public class ParentController {
         System.out.println("Received dob: " + dob);
 
         try {
-            Pupil pupil = jsonService.findPupilbyNameAndDob(name, dob.atStartOfDay());
+            Pupil pupil = eventJsonService.findPupilbyNameAndDob(name, dob.atStartOfDay());
             if (pupil == null) {
                 return ResponseEntity.status(401).body("This pupil does not exist");
             }
@@ -37,7 +37,7 @@ public class ParentController {
 
     @GetMapping("/parents-events/{cohortId}")
     public ResponseEntity<?> getEventsByCohort(@PathVariable Integer cohortId) {
-        List<Event> events = jsonService.getEventsByCohortId(cohortId);
+        List<Event> events = eventJsonService.getEventsByCohortId(cohortId);
         return ResponseEntity.ok(events);
     }
 

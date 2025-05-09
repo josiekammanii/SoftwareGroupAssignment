@@ -16,7 +16,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class JsonService {
+public class eventJsonService {
     private static final String EVENTS_FILE_PATH = "data/events.json";
 
     public Pupil findPupilbyNameAndDob(String pupilName, LocalDateTime dobTime) {
