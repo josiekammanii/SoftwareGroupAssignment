@@ -32,7 +32,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/rsvps/allRsvps")
     public ResponseEntity<List<rsvp>> getAllRsvps() {
         try {
             List<rsvp> rsvps = ParentAdminApplication.rsvpJsonService.loadRsvps();
