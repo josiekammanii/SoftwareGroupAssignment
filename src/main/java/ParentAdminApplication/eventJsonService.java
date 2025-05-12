@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class eventJsonService {
     private static final String EVENTS_FILE_PATH = "data/events.json";
 
-    public Pupil findPupilbyNameAndDob(String pupilName, LocalDateTime dobTime) {
+    public static Pupil findPupilbyNameAndDob(String pupilName, LocalDateTime dobTime) {
         try {
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream("json/pupils.json");
             ObjectMapper mapper = new ObjectMapper();

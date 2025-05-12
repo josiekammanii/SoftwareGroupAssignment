@@ -13,10 +13,12 @@ import java.util.List;
 public class AdminController {
 
     private final eventJsonService eventJsonService;
+    private final rsvpJsonService rsvpJsonService;
 
     @Autowired
-    public AdminController(eventJsonService eventJsonService) {
+    public AdminController(eventJsonService eventJsonService, ParentAdminApplication.rsvpJsonService rsvpJsonService) {
         this.eventJsonService = eventJsonService;
+        this.rsvpJsonService = rsvpJsonService;
     }
 
     @GetMapping
@@ -26,6 +28,17 @@ public class AdminController {
             return ResponseEntity.ok(events);
         } catch (Exception e) {
             System.err.println("Error fetching events: " + e.getMessage());
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<rsvp>> getAllRsvps() {
+        try {
+            List<rsvp> rsvps = ParentAdminApplication.rsvpJsonService.loadRsvps();
+            return ResponseEntity.ok(rsvps);
+        } catch (Exception e) {
+            System.err.println("Error fetching rsvps: " + e.getMessage());
             return ResponseEntity.status(500).body(null);
         }
     }
@@ -51,6 +64,16 @@ public class AdminController {
             return ResponseEntity.ok(events);
         }
 
+    @GetMapping("/rsvps/{cohortId}")//TODO check this
+    public ResponseEntity<List<rsvp>> getRsvpsByCohortId (@PathVariable Integer cohortId){
+        List<rsvp> rsvps = (List<rsvp>) ParentAdminApplication.rsvpJsonService.getRsvpByCohortId(cohortId);
+
+        if (rsvps.isEmpty()) {
+            return ResponseEntity.status(404).body(new ArrayList<>());
+        }
+        return ResponseEntity.ok(rsvps);
+    }
+
         @PutMapping("/{eventId}")
         public ResponseEntity<String> updateEvent(@PathVariable String eventId, @RequestBody Event event) {
             try {
@@ -74,6 +97,12 @@ public class AdminController {
                 System.err.println("Error deleting event: " + e.getMessage());
                 return ResponseEntity.status(500).body("Error deleting event");
             }
+        }
+
+        @GetMapping("/rsvps/{eventId}")
+        public ResponseEntity<List<rsvp>> getRSVPsByEventId (@PathVariable String eventId) {
+            List<rsvp> rsvps = (List<rsvp>) rsvpJsonService.getRsvpByEventId(eventId);
+            return ResponseEntity.ok(rsvps);
         }
     }
 
