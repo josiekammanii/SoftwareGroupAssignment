@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
-import ParentAdminApplication.Event;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,15 +27,6 @@ class JsonServiceTest {
             return Arrays.asList(
                     new Event("1", "Sports Day", LocalDateTime.of(2025, 6, 10, 10, 0).format(formatter), "10:00", "Field", 1),
                     new Event("2", "Science Fair", LocalDateTime.of(2025, 6, 15, 12, 0).format(formatter), "12:00", "Lab", 2)
-            );
-        }
-
-        @Override
-        public List<rsvp> loadRsvps() {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            return Arrays.asList(
-                    new rsvp(1, "2",  "Cinema Trip", "Jane Lois", "Yes"),
-                    new rsvp(2, "1", "Science Fair",  "Aisha Rahman", "No")
             );
         }
 
@@ -66,15 +56,22 @@ class JsonServiceTest {
         }
 
         @Test
-        public rsvp getRsvpsByCohortId () {
-            List<Pupil> pupils = this.loadPupils();
-            LocalDate dob = dobTime.toLocalDate();
-            for (Pupil pupil : pupils) {
-                if (pupil.getName().trim().equalsIgnoreCase(pupilName.trim()) && pupil.getDob().equals(dob)) {
-                    return pupil;
+        void findRsvpsByCohortId() {
+            List<rsvp> rsvps = this.loadRsvps();
+            for (rsvp rsvp : rsvps) {
+                String pupilName = "James Radcliffe";
+                String eventId = "1";
+                if (rsvp.getPupilName().trim().equalsIgnoreCase(pupilName.trim()) && rsvp.setRsvpId().equalsIgnoreCase(pupilName.trim() + eventId)) {
+                    return;
                 }
             }
-            return null;
         }
 
+    private List<rsvp> loadRsvps() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return Arrays.asList(
+                new rsvp(1, "2",  "Cinema Trip", "Jane Lois", "Yes"),
+                new rsvp(2, "1", "Science Fair",  "Aisha Rahman", "No")
+        );
     }
+}
