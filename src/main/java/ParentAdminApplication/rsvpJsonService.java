@@ -61,9 +61,6 @@ public class rsvpJsonService {
     public void saveRsvp(rsvp rsvp) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        Random r = new Random();
-        Integer rsvpId = r.nextInt(1000000);
-
         try {
             List<rsvp> rsvps = loadRsvps();
             if (rsvp.getRsvpId() == null || rsvp.getPupilName().isEmpty()) {
@@ -99,7 +96,7 @@ public class rsvpJsonService {
                 }
             }
             if (!updatedRsvp) {
-                System.out.println("There is no rsvp with ID " + ParentAdminApplication.rsvp.getRsvpId() + ". Rsvp cannot be updated.");
+                System.out.println("There is no rsvp with ID " + rsvp.getRsvpId() + ". Rsvp cannot be updated.");
                 return;
             }
 
@@ -112,30 +109,6 @@ public class rsvpJsonService {
         } catch (IOException e) {
             System.err.println("Failed to update rsvp: " + e.getMessage());
             throw new RuntimeException("Failed to update rsvp", e);
-        }
-    }
-
-    public void deleteRsvp(Integer rsvpId) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-
-        try {
-            List<rsvp> events = loadRsvps();
-            boolean removeRsvp = getAllRSVPs().removeIf(rsvps -> rsvp.getRsvpId().equals(rsvpId));
-            if (!removeRsvp) {
-                System.out.println("Rsvp with ID " + rsvpId + " not found for deletion.");
-                return;
-            }
-
-            System.out.println("Deleted rsvp with ID: " + rsvpId);
-            System.out.println("Rsvps after deleting: " + getAllRSVPs());
-            File file = new File(RSVP_FILE_PATH);
-            System.out.println("Saving rsvps to: " + file.getAbsolutePath());
-            mapper.writeValue(file, rsvpId);//TODO check this logic
-            System.out.println("Rsvps saved successfully");
-        } catch (IOException e) {
-            System.err.println("Failed to delete event: " + e.getMessage());
-            throw new RuntimeException("Failed to delete event", e);
         }
     }
 }

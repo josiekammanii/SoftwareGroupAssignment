@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class JsonServiceTest {
 
     JsonService jsonService = new JsonService() {
+
         @Override
         public List<Pupil> loadPupils() {
             return Arrays.asList(
@@ -25,8 +26,17 @@ class JsonServiceTest {
         public List<Event> loadEvents() {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             return Arrays.asList(
-                    new Event("1","Sports Day", LocalDateTime.of(2025, 6, 10, 10, 0).format(formatter),"10:00","Field", 1),
-                    new Event("2","Science Fair", LocalDateTime.of(2025, 6, 15, 12, 0).format(formatter), "12:00", "Lab", 2)
+                    new Event("1", "Sports Day", LocalDateTime.of(2025, 6, 10, 10, 0).format(formatter), "10:00", "Field", 1),
+                    new Event("2", "Science Fair", LocalDateTime.of(2025, 6, 15, 12, 0).format(formatter), "12:00", "Lab", 2)
+            );
+        }
+
+        @Override
+        public List<rsvp> loadRsvps() {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            return Arrays.asList(
+                    new rsvp(1, "2",  "Cinema Trip", "Jane Lois", "Yes"),
+                    new rsvp(2, "1", "Science Fair",  "Aisha Rahman", "No")
             );
         }
 
@@ -43,16 +53,28 @@ class JsonServiceTest {
         }
     };
 
-    @Test
-    void findPupilbyNameAndDob() {
-        String name = "James Radcliffe";
-        LocalDateTime dob = LocalDate.of(2005, 4, 23).atStartOfDay();
+        @Test
+        void findPupilbyNameAndDob() {
+            String name = "James Radcliffe";
+            LocalDateTime dob = LocalDate.of(2005, 4, 23).atStartOfDay();
 
-        Pupil result = jsonService.findPupilbyNameAndDob(name, dob);
+            Pupil result = jsonService.findPupilbyNameAndDob(name, dob);
 
-        assertNotNull(result);
-        assertEquals("James Radcliffe", result.getName());
-        assertEquals(LocalDate.of(2005, 4, 23), result.getDob());
+            assertNotNull(result);
+            assertEquals("James Radcliffe", result.getName());
+            assertEquals(LocalDate.of(2005, 4, 23), result.getDob());
+        }
+
+        @Test
+        public rsvp getRsvpsByCohortId () {
+            List<Pupil> pupils = this.loadPupils();
+            LocalDate dob = dobTime.toLocalDate();
+            for (Pupil pupil : pupils) {
+                if (pupil.getName().trim().equalsIgnoreCase(pupilName.trim()) && pupil.getDob().equals(dob)) {
+                    return pupil;
+                }
+            }
+            return null;
+        }
+
     }
-
-}

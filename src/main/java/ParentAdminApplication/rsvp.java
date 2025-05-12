@@ -1,6 +1,5 @@
 package ParentAdminApplication;
 
-import java.time.LocalDateTime;
 import java.util.Random;
 
 public class rsvp {
@@ -8,8 +7,7 @@ public class rsvp {
     private Integer cohortId;
     private String eventId;
     private String eventName;
-    private static String pupilName;
-    private LocalDateTime rsvpDateTime;
+    private String pupilName;
     private String rsvpResponse;
 
     public rsvp(Integer cohortId, String eventId, String eventName, String pupilName, String rsvpResponse) {
@@ -25,8 +23,8 @@ public class rsvp {
         return cohortId;
     }
 
-    public static Integer getRsvpId() {
-        return rsvpId;
+    public String getRsvpId() {
+        return pupilName + eventId;
     }
 
     public String getEventId() {
@@ -37,25 +35,14 @@ public class rsvp {
         return eventName;
     }
 
-    public static String getPupilName() {
+    public String getPupilName() {
         return pupilName;
-    }
-
-    public LocalDateTime getRsvpDateTime() {
-        return rsvpDateTime;
     }
 
     public String getRsvpResponse(){
         return rsvpResponse;
     }
-
-    //Setters
-    public void setRsvpId() {
-        if (rsvpId == null && rsvp.getPupilName().isEmpty()) {
-            Random r = new Random();
-            Integer rsvpId = r.nextInt(1000000);
-        } else {
-            this.rsvpId = rsvpId;
-        }
+    public String setRsvpId() {
+        return pupilName + eventId;
     }
 }
